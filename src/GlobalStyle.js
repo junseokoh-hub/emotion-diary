@@ -1,7 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&family=Yeon+Sung&display=swap');
   * {
     padding: 0;
     margin: 0;
@@ -14,8 +13,8 @@ const GlobalStyle = createGlobalStyle`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Nanum Pen Script', cursive;
-    font-family: 'Yeon Sung', cursive;
+    font-family: 'Yeon Sung';
+    font-family: 'Nanum Pen Script';
   }
 
   a {
