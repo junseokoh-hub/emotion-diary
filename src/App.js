@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer, useRef } from "react";
 import styled from "styled-components";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
@@ -22,12 +22,81 @@ const Container = styled.div`
   }
 `;
 
+const reducer = (state, action) => {
+  let newState = [];
+  switch (action.type) {
+    case "INIT": {
+      return action.data;
+    }
+    case "CREATE": {
+      newState = [action.data, ...state];
+      break;
+    }
+    case "BREAK": {
+      newState = state.filter((it) => it.id !== action.targetId);
+      break;
+    }
+    case "EDIT": {
+      newState = state.map((it) =>
+        it.id === action.data.id ? { ...action.data } : it,
+      );
+      break;
+    }
+    default:
+      return state;
+  }
+  return newState;
+};
+
+export const DiaryStateContext = React.createContext();
+export const DiaryDispatchContext = React.createContext();
 function App() {
+  const [data, dispatch] = useReducer(reducer, []);
+
+  const dataId = useRef(0);
+  //CREATE
+  const onCreate = (date, content, emotion) => {
+    dispatch({
+      type: "CREATE",
+      data: {
+        id: dataId.current,
+        date: new Date(date).getTime(),
+        content,
+        emotion,
+      },
+    });
+    dataId.current += 1;
+  };
+  //REMOVE
+  const onRemove = (targetId) => {
+    dispatch({ type: "REMOVE", targetId });
+  };
+  //EDIT
+  const onEdit = (targetId, date, content, emotion) => {
+    dispatch({
+      type: "EDIT",
+      data: {
+        id: targetId,
+        date: new Date(date).getTime(),
+        content,
+        emotion,
+      },
+    });
+  };
+
   return (
     <>
-      <Router>
-        <Container>
-          <MyHeader
+      <DiaryStateContext.Provider value={data}>
+        <DiaryDispatchContext.Provider
+          value={{
+            onCreate,
+            onEdit,
+            onRemove,
+          }}
+        >
+          <Router>
+            <Container>
+              {/* <MyHeader
             headText={"App"}
             leftChild={
               <MyButton text={"왼쪽 버튼"} onClick={() => alert("왼쪽 클릭")} />
@@ -50,21 +119,23 @@ function App() {
             onClick={() => alert("버튼 클릭")}
             type={"negative"}
           />
-          <MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} />
+          <MyButton text={"버튼"} onClick={() => alert("버튼 클릭")} /> */}
 
-          {/* <img src={process.env.PUBLIC_URL + `/assets/emotion1.png`} />
+              {/* <img src={process.env.PUBLIC_URL + `/assets/emotion1.png`} />
           <img src={process.env.PUBLIC_URL + `/assets/emotion2.png`} />
           <img src={process.env.PUBLIC_URL + `/assets/emotion3.png`} />
           <img src={process.env.PUBLIC_URL + `/assets/emotion4.png`} />
           <img src={process.env.PUBLIC_URL + `/assets/emotion5.png`} /> */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/new" element={<New />} />
-            <Route path="/edit" element={<Edit />} />
-            <Route path="/diary/:id" element={<Diary />} />
-          </Routes>
-        </Container>
-      </Router>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/new" element={<New />} />
+                <Route path="/edit" element={<Edit />} />
+                <Route path="/diary/:id" element={<Diary />} />
+              </Routes>
+            </Container>
+          </Router>
+        </DiaryDispatchContext.Provider>
+      </DiaryStateContext.Provider>
       <GlobalStyle />
     </>
   );
