@@ -135,11 +135,6 @@ function App() {
         >
           <Router>
             <Container>
-              {/* <img src={process.env.PUBLIC_URL + `/assets/emotion1.png`} />
-          <img src={process.env.PUBLIC_URL + `/assets/emotion2.png`} />
-          <img src={process.env.PUBLIC_URL + `/assets/emotion3.png`} />
-          <img src={process.env.PUBLIC_URL + `/assets/emotion4.png`} />
-          <img src={process.env.PUBLIC_URL + `/assets/emotion5.png`} /> */}
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/new" element={<New />} />
