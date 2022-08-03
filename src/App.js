@@ -37,7 +37,7 @@ const reducer = (state, action) => {
     }
     case "EDIT": {
       newState = state.map((it) =>
-        it.id === action.data.id ? { ...action.data } : it,
+        it.id === action.data.id ? action.data : it,
       );
       break;
     }
@@ -80,12 +80,6 @@ const dummyData = [
     emotion: 5,
     content: "오늘의 일기 5번",
     date: 1659501800369,
-  },
-  {
-    id: 6,
-    emotion: 5,
-    content: "오늘의 일기 6번",
-    date: 1759501800369,
   },
 ];
 
@@ -138,7 +132,7 @@ function App() {
               <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="/new" element={<New />} />
-                <Route path="/edit" element={<Edit />} />
+                <Route path="/edit/:id" element={<Edit />} />
                 <Route path="/diary/:id" element={<Diary />} />
               </Routes>
             </Container>
