@@ -31,13 +31,13 @@ const reducer = (state, action) => {
       newState = [action.data, ...state];
       break;
     }
-    case "BREAK": {
+    case "REMOVE": {
       newState = state.filter((it) => it.id !== action.targetId);
       break;
     }
     case "EDIT": {
       newState = state.map((it) =>
-        it.id === action.data.id ? action.data : it,
+        it.id === action.targetId ? { ...action.data } : it,
       );
       break;
     }
