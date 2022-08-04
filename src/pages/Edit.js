@@ -7,8 +7,8 @@ function Edit() {
   const [originData, setOriginData] = useState();
   const navigate = useNavigate();
   const { id } = useParams();
+
   const diaryList = useContext(DiaryStateContext);
-  console.log(diaryList);
 
   useEffect(() => {
     if (diaryList.length >= 1) {
@@ -22,7 +22,7 @@ function Edit() {
         navigate("/", { replace: true });
       }
     }
-  }, [id, diaryList]);
+  }, [id, diaryList, navigate]);
 
   return (
     <div>
