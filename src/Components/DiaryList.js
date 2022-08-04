@@ -26,7 +26,7 @@ const SelectMenu = styled.select`
   font-size: 18px;
 `;
 
-const ControlMenu = ({ value, onChange, optionList }) => {
+const ControlMenu = React.memo(({ value, onChange, optionList }) => {
   return (
     <SelectMenu value={value} onChange={(e) => onChange(e.target.value)}>
       {optionList?.map((it, index) => (
@@ -36,7 +36,7 @@ const ControlMenu = ({ value, onChange, optionList }) => {
       ))}
     </SelectMenu>
   );
-};
+});
 
 const MenuWrapper = styled.div`
   margin: 20px 0 30px 0;
