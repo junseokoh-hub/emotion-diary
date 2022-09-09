@@ -30,7 +30,7 @@ const ControlMenu = React.memo(({ value, onChange, optionList }) => {
   return (
     <SelectMenu value={value} onChange={(e) => onChange(e.target.value)}>
       {optionList?.map((it, index) => (
-        <option value={it.value} key={index}>
+        <option value={it.value} key={it.value}>
           {it.name}
         </option>
       ))}

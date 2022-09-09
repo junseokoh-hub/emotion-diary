@@ -32,6 +32,11 @@ function Home() {
     );
   }, [diaryList, curDate]);
 
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerHTML = `감정 일기장`;
+  }, []);
+
   const increaseMonth = () => {
     setCurDate(
       new Date(
